@@ -1,0 +1,45 @@
+<template>
+    <div class="footer_con">
+         <image src="https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/2019/luokuan.jpg" mode="widthFix" lazy-load="false"></image>
+    </div>
+</template>
+
+<script>
+import wepy from '@wepy/core';
+wepy.component({
+       data: {
+               text:[
+                   
+               ]
+       }
+})
+</script>
+
+<style lang="less">
+.footer_con{
+    width: 100%;
+    /* height: 100%; */
+    padding-top: 10px;
+    image{
+        width:100%;
+    }
+    /* letter-spacing: 3px;
+    font-family: 'pingfang-regular';
+    color:red;
+    font-size: 20rpx; */
+    /* background: url("https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/2019/luokuan.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-background-size: cover; */
+}
+.txt{
+    width: 100%;
+    height: 30px;
+    margin-top:10rpx;
+    position: relative;
+    top: 80px;
+    text-align: center;
+    line-height: 30px;
+}
+</style>

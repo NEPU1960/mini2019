@@ -1,0 +1,259 @@
+<template>
+    <view class="yx_con">
+        <view class="flash_back">
+            <view class="flash_light ">
+
+            </view>
+        </view>
+        <view class="home_countDown">
+            <view class="text">
+                <span class="day text_span">天</span>
+                <span class="hour text_span">时</span>
+                <span class="min text_span">分</span>
+                <span class="sec text_span">秒</span>
+                <!-- <span class="shine text_span"></span> -->
+            </view>
+            <view class="num">
+                <span class="time num_day">{{time.dayFist+time.dayLast}}</span>
+                <span class="time num_hour">{{time.hourFist+time.hourLast}}</span>
+                <span class="num_text">
+                    <view class="num_text_view">距</view>
+                    <view class="num_text_view">离</view>
+                    <view class="num_text_view">开</view>
+                    <view class="num_text_view">学</view>
+                </span>
+                <span class="time num_min">{{time.monA+time.monLast}}</span>
+                <span class="time num_sec">{{time.secFist+time.secLast}}</span>
+            </view>
+        </view>
+    </view>
+</template>
+<script>
+import wepy from '@wepy/core'
+wepy.component({
+     data:{
+        time:{
+            'dayFist' : "",
+            'dayLast' : '',
+            'hourFist' : "",
+            'hourLast' : '',
+            'monA' : '',
+            'monLast' : '',
+            'secFist' : "",
+            'secLast' : ''
+        },
+    },
+    methods:{
+        
+        countDown(){
+            var _this=this
+            let after = '2019/09/02 00:00:00'
+            let mydate = new Date()
+            let now = mydate.getTime()
+            let subtract = new Date(Date.parse(after)).getTime() - now  //时间差距
+            let data = {}
+            if (subtract > 0) {
+                let day = Math.floor(subtract / (1000 * 60 * 60 * 24))
+                data.dayFist = _this.timeSplit(day , 0)
+                data.dayLast = _this.timeSplit(day , 1)
+                let hour = Math.floor((subtract / (1000 * 60 * 60 ) ) % 24)
+                data.hourFist = _this.timeSplit(hour , 0)
+                data.hourLast = _this.timeSplit(hour , 1)
+                let mon = Math.floor((subtract / (1000 * 60) ) %60)
+                data.monA = _this.timeSplit(mon , 0)
+                data.monLast = _this.timeSplit(mon , 1)
+                let second = Math.floor((subtract / 1000 ) % 60)
+                data.secFist = _this.timeSplit(second , 0)
+                data.secLast = _this.timeSplit(second , 1)
+                this.time = data
+            }
+        },
+        timeSplit(time , index){
+            let timeStr = time.toString()
+            let len = timeStr.length
+            let timeArr = timeStr.split('')
+            if(index == 0){
+                if(len == 1){
+                    return 0
+                }else if(len >=2){
+                    return timeArr[0]
+                }
+            }else if(index == 1){
+                return timeArr[len-1]
+            }
+        }
+    },
+    created:function(){
+        this.countDown()
+        var _this=this
+        setInterval(function(){_this.countDown()}, 1000);
+        console.log(this.time)
+    },
+})
+</script>
+<style>
+.yx_con{
+    height:auto;
+    width: 100%;
+    background-color:#a8cdff;
+}
+.flash_back{
+    width: 100%;
+    height: 900rpx;
+    background: url('https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/2019/background.jpg');
+    background-position: center 0;
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+.flash_light{
+    width: 100%;
+    height: 100%;
+    background: url('https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/2019/background2.jpg');
+    background-position: center 0;
+    background-repeat: no-repeat;
+    background-size:cover;
+    animation: flash 2s infinite;
+}
+.home_countDown{
+    width: 100%;
+    height: 150rpx;
+    background: url('https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/2019/background.jpg');
+    background-position: center -700rpx;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: -198rpx;
+}
+.text{
+    width: 100%;
+    height: 25px;
+    position: relative;
+    top:0px;
+    display: flex;
+}
+.text_span{
+    display: inline-block;
+    width: 28rpx;
+    height: 100%;
+    position: relative;
+    font-size: 20rpx;
+    color:#8af5ff;
+}
+.shine{
+    background-color:#25e8fa;
+    width: 40px;
+    height: 15px;
+    top: 12px;
+    left: 228rpx;
+    border-radius: 5px;
+    animation: colorChange 5s infinite !important;
+}
+.sec{
+    left: 520rpx;
+}
+.min{
+    left: 440rpx;
+}
+.hour{
+    left: 220rpx;
+}
+.day{
+    left: 125rpx;
+}
+.num{
+    width: 100%;
+    height: 90px;
+    position: relative;
+    top:5px;
+    display:flex;
+    position: relative;
+    text-align: center;
+    color: #fff;
+    margin-left: 95rpx;
+    margin-top: -14px;
+}
+.time{
+    width: 90rpx;
+    height: 100%;
+    line-height: 80rpx;
+    font-size: 50rpx;
+}
+.num_text{
+    width: 105rpx;
+    height: 40rpx;
+    left:137rpx;
+    font-size: 7px;
+    top: -10px;
+    margin-top:25rpx;
+    margin-left: 10rpx;
+    display: flex;
+
+}
+.num_text_view{
+    width: 25px;
+    height: 23px;
+    font-size: 14rpx;
+    vertical-align: top;
+}
+.num_sec{
+   margin-left: 33rpx;
+}
+.num_min{
+    margin-left: 40rpx;
+}
+.num_hour{
+    margin-left: 13px;
+}
+.num_day{
+    left: 95rpx;
+}
+
+
+
+@keyframes colorChange{
+    0%{
+        background-color: #25e8fa;
+    }
+    50%{
+        background-color: #defaff;
+    }
+    100%{
+        background-color: #25e8fa;
+    }
+}
+@keyframes flash{
+    0% {
+        opacity: 0.5;
+    }
+    8%, 12%, 16% {
+        opacity: 0.5;
+    }
+    10%,  14% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 1;
+    }
+
+}
+
+
+.in-enter-active{
+    animation: bounce .5s;
+}
+
+
+@keyframes bounce{
+	0% {
+	  transform: scale(0);
+	}
+	50% {
+	  transform: scale(1.05);
+	}
+	100% {
+	  transform: scale(1);
+	}
+}
+</style>

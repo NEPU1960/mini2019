@@ -1,0 +1,137 @@
+<template>
+    <map id="navi_map" longitude="{{longitude}}" latitude="{{latitude}}" 
+        scale="14" markers="{{markers}}" polyline="{{polyline}}" include-points="{{markers}}"
+        class="navi_map" show-location enable-overlooking="true" enable-3D="true">
+
+        <cover-view class="distance">{{distance}}</cover-view>
+    </map>
+</template>
+<script>
+import wepy from '@wepy/core';
+// import AMapWX from "../../untils/amap-wx";
+var amapFile = require('../../untils/amap-wx.js')
+wepy.page({
+    data: {
+        latitude: null,
+        longitude: null,
+        markers: [],
+        distance: '',
+        polyline: []
+    },
+    onLoad: function (options) {
+        console.log("options",options)
+        var _this = this;
+        console.log(this.$app.$options.globalData.longitude)
+        this.longitude = this.$app.$options.globalData.longitude
+        this.latitude = this.$app.$options.globalData.latitude
+        _this.routing(options);
+        wx.getLocation({
+            type: 'gcj02',
+            success: function (res) {
+                console.log('back',_this)
+                // this.$app.$options.globalData.latitude = res.latitude;
+                // this.$app.$options.globalData.longitude = res.longitude;
+                _this.latitude = res.latitude
+                _this.longitude = res.longitude
+                // _this.routing(options);
+            },
+            fail: function () {
+                console.log("定位失败")
+                wx.showModal({
+                title: '无法使用该功能',
+                content: '请点击右上角在“关于校园导览”设置中给予定位权限',
+                showCancel: false,
+                success: function (res) {
+                    wx.navigateBack({
+                    delta: 1
+                    })
+                    return;
+                }
+                })
+            }
+        })
+    },
+    methods: {
+        routing: function (options){
+            var _this = this;
+            let distance = Math.abs(_this.longitude - options.longitude) + Math.abs(_this.latitude - options.latitude)
+            console.log("dis",options);
+            var myAmapFun =new amapFile.AMapWX({ key: "6c3992047b49d010a41bf902c95a68d9"});
+            console.log("myamp",myAmapFun)
+            let routeData = {
+            origin: options.longitude + ',' + options.latitude,
+            destination: _this.longitude + ',' + _this.latitude,
+            success: function (data) {
+                console.log('data',data)
+                var points = [];
+                if (data.paths && data.paths[0] && data.paths[0].steps) {
+                    var steps = data.paths[0].steps;
+                    for (var i = 0; i < steps.length; i++) {
+                            var poLen = steps[i].polyline.split(';');
+                            for (var j = 0; j < poLen.length; j++) {
+                                points.push({
+                                    longitude: parseFloat(poLen[j].split(',')[0]),
+                                    latitude: parseFloat(poLen[j].split(',')[1])
+                                })
+                            }
+                    }
+                }
+                console.log("points",points)
+                _this.markers= [{
+                    "width": "25",
+                    "height": "35",
+                    iconPath: "/img/mapicon_end.png",
+                    latitude: options.latitude,
+                    longitude: options.longitude
+                }, {
+                    "width": "25",
+                    "height": "35",
+                    iconPath: "/img/mapicon_start.png",
+                    latitude: _this.latitude,
+                    longitude: _this.longitude
+                }],
+                _this.polyline = [{
+                    points: points,
+                    color: "#0091ff",
+                    width: 6
+                }]
+                if (data.paths[0] && data.paths[0].distance) {
+                    console.log("distance",data.paths[0].distance)
+                    this.distance = data.paths[0].distance + '米'
+                }
+            },
+            fail: function (info) {
+                console.log(info)
+            }
+            }
+            if (distance < 0.85) {
+            // getWalkingRoute 步行
+            myAmapFun.getWalkingRoute(routeData)
+            } else {
+            // getDrivingRoute 驾车
+            myAmapFun.getDrivingRoute(routeData)
+            }
+        }
+    }
+    
+})
+</script>
+<style>
+.navi_map {
+  width: auto;
+  height: 100vh;
+}
+
+.distance {
+  position: absolute;
+  bottom: 30px;
+  right: 10px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  padding: 3px 5px 3px 5px;
+  color: #fff;
+  background: #0091ff;
+  border-radius: 5px;
+}
+</style>

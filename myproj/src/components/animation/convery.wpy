@@ -1,0 +1,205 @@
+<template>
+    <div class="song_con">
+         <span class="song_E"></span>
+         <span class="song_D"></span>
+         <span class="song_C"></span>
+         <span class="song_B"></span>
+         <span class="song_down"></span>
+    </div>
+</template>
+
+<script>
+import wepy from '@wepy/core';
+wepy.component({
+  
+})
+</script>
+
+<style scoped>
+.song_con{
+    width: 430px;
+    height: 30px;
+    line-height: 35px;
+    margin-left: 90px;
+}
+.song_con span{
+    position: relative;
+    display: inline-block;
+    width: 28px;
+    height: 15px;
+    margin-right: 40px;
+    background-color: #7b9dfd;
+    border: 1px solid #4d75e8;
+}
+.song_con .song_E{
+  animation: tranE 10s linear infinite; 
+}
+.song_con .song_D{
+  animation: tranD 10s linear infinite; 
+}
+.song_con .song_C{
+   animation: tranC 10s linear infinite; 
+}
+.song_con .song_B{
+   animation: tranB 10s linear infinite; 
+}
+.song_con .song_down{
+   animation: tranA 10s linear infinite;
+}
+@keyframes tranE{
+    0%{
+      left: 0;
+      top: 0;
+      opacity: 1;
+    }
+    71.2%{
+      left: 420px;
+      top: 0;
+      opacity: 1;
+    }
+    91.2%{
+      left: 420px;
+      top: 30px;
+      opacity: 0;
+    }
+    99.2%{
+      left:0;
+      top: 0;
+      opacity: 0;
+    }
+    100%{
+      left:0;
+      top: 0;
+      opacity: 1;
+    }
+}
+@keyframes tranD{
+    0%{
+      left: 0;
+      top: 0;
+      opacity: 1;
+    }
+    58.3%{
+      left: 352px;
+      top: 0;
+      opacity: 1;
+    }
+    78.3%{
+      left: 352px;
+      top: 30px;
+      opacity: 0;
+    }
+    86.3%{
+      top: 0;
+      left: -68px;
+      opacity: 0;
+    }
+    87.3%{
+      top: 0;
+      left: -68px;
+      opacity: 1;
+    }
+    100%{
+      top: 0;
+      left: 0;
+      opacity: 1;
+    }
+
+}
+@keyframes tranC{
+    0%{
+      left: 0;
+      top: 0;
+      opacity: 1;
+    }
+    46%{
+      left: 284px;
+      top: 0;
+      opacity: 1;
+    }
+    66%{
+      left: 284px;
+      top: 30px;
+      opacity: 0;
+    }
+    74%{
+      left: -136px;
+      top: 0;
+      opacity: 0;
+    }
+    75%{
+      left: -136px;
+      top: 0;
+      opacity: 1;
+    }
+    100%{
+      left: 0;
+      top: 0;
+      opacity: 1;
+    }
+}
+@keyframes tranB{
+    0%{
+      left: 0;
+      top: 0;
+      opacity: 1;
+    }
+    33%{
+      left: 216px;
+      top: 0;
+      opacity: 1;
+    }
+    53%{
+      left: 216px;
+      top: 30px;
+      opacity: 0;
+    }
+    61%{
+      left: -204px;
+      top: 0;
+      opacity: 0;
+    }
+    62%{
+      left: -204px;
+      top: 0;
+      opacity: 1;
+    }
+    100%{
+      left: 0;
+      top: 0;
+      opacity: 1;
+    }
+}
+@keyframes tranA{
+    0%{
+      left: 0;
+      top: 0;
+      opacity: 1;
+    }
+    20%{
+      left: 148px;
+      top: 0;
+      opacity: 1;
+    }
+    40%{
+      left: 148px;
+      top: 30px;
+      opacity: 0;
+    }
+    48%{
+      left: -272px;
+      top: 0px;
+      opacity: 0;
+    }
+    49%{
+      left: -272px;
+      top: 0px;
+      opacity: 1;
+    }
+    100%{
+      left: 0;
+      top: 0;
+      opacity: 1;
+    }
+}
+</style>

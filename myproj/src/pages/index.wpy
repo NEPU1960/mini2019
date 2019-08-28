@@ -1,0 +1,235 @@
+<config>
+{
+    usingComponents: {
+        "Footer":"../components/footer",
+        "homeBubble":"../components/animation/bubble",
+        "title":"../components/title",
+    },
+}
+</config>
+<template>
+    <view>
+        <title></title>
+        <view class="main">
+            <view class="map">
+                <view class="home_map_text">
+                    <view class="home_map_text_info">东油地图</view>
+                </view>
+                <view class="home_map_img">
+                    <image src="/static/images/map.png" @tap="nav('map')" mode="scaleToFill" lazy-load="false"/>
+                </view>
+            </view>
+            <view class="home_gong">
+                <view class="home_gong_text">油子攻略</view>
+                <view class="home_gong_bg">
+                    <view class="home_gong_icon">
+                        <view v-for="item in gonglue">
+                                <view class="home_gong_kuai" @tap="nav(item.url)"> 
+                                    <image  class="home_gong_img" src="/static/images/icons/{{item.icon}}.png" mode="scaleToFill"  lazy-load="false"></image>
+                                    <view>{{item.name}}</view>
+                                </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="home_gong">
+                <view class="home_gong_text top">军训攻略</view>
+                <view class="home_gong_bg">
+                    <view class="home_gong_icon">
+                        <view v-for="item in junxun">
+                                <view class="home_gong_kuai" @tap="nav(item.url)"> 
+                                    <image  class="home_gong_img" src="/static/images/icons/{{item.icon}}.png" mode="scaleToFill"  lazy-load="false"></image>
+                                    <view>{{item.name}}</view>
+                                </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <Footer class="footer"></Footer>
+        </view>
+    </view>
+</template>
+<script>
+import wepy from "@wepy/core";
+wepy.page({
+    data: {
+        gonglue:[
+            {"name":"新生清单","url":"gonglue","icon":"test"},
+            {"name":"交通路线","url":"jiaotong","icon":"test"},
+            {"name":"学生食堂","url":"shitang","icon":"test"},
+            {"name":"周边生活","url":"zhoubian","icon":"test"},
+        ],
+        junxun:[
+            {"name":"军训时间","url":"jun-time","icon":"test"},
+            {"name":"训练内容","url":"jun-txt","icon":"test"},
+            {"name":"军训纪律","url":"jun-jilv","icon":"test"},
+            {"name":"军训贴士","url":"jun-tieshi","icon":"test"},
+        ],
+        test:"test"
+    },
+    methods: {
+        nav(url){
+            wx.navigateTo({
+                url: "/pages/"+url
+            });
+        }
+    }
+   
+})
+</script>
+
+<style lang="less">
+.main{
+    // width: 100%;
+    // height: auto;
+    // background-image: url("https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/2019/new1.jpg"); 
+    // background-position: center 0;
+    // background-repeat: no-repeat;
+    // background-size:cover;
+    height: auto;
+    width: 100%;
+    background: url("https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/2019/background.jpg");
+    background-position: center -850rpx;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-background-size: cover;
+}
+.footer{
+    width:100%;
+    
+//     image{
+//         width:100%;
+//     }
+}
+.null{
+    width: 100%;
+    height: 180px;
+}
+.about{
+    // width: 300px;
+    // height: 70px;
+    text-align: center;
+    // line-height: 90px;
+    font-size: 34px;
+    position: relative;
+    // left: 204px;
+    color:#cbfffa;
+    // margin-top: -100rpx;
+}
+.abuot_text{
+     width: 100%;
+    // height: 100px;
+    text-align: center;
+    line-height: 90px;
+    font-size: 34px;
+    position: relative;
+    // left: 204px;
+    color:#008cff;
+    line-height:93px;
+    background: url("https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/2019/kuang.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    -webkit-background-size: contain;
+}
+.top{
+    margin-top:20rpx;
+}
+.home_bubble {
+    width: 100%;
+    height: 58px;
+    margin-top: 40px;
+}
+.home_map_text,.home_gong_text{
+    width: 100%;
+    // height: 100px;
+    text-align: center;
+    line-height: 90px;
+    font-size: 34px;
+    position: relative;
+    // left: 204px;
+    color:#008cff;
+    line-height:93px;
+    background: url("https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/2019/kuang.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    -webkit-background-size: contain;
+    // margin-left: 40rpx;
+    // margin-right: 40rpx;
+}
+.home_gong_bg{
+    width:100%;
+    height: auto;
+    background: url("https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/2019/xm.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    -webkit-background-size: contain;
+}
+.home_gong_icon{
+    display: flex;
+    width: 100%;
+    height: 341rpx;
+    // position: relative;
+    margin-left: 50rpx;
+    margin-right:100rpx;
+    font-size: 24rpx;
+    text-align: center;
+    margin-top: 50rpx;
+   
+
+}
+.home_gong_kuai{
+    // display: inline-block;
+    // font-family: 'not specified';
+    width: 100%;
+    height: 130rpx;
+    color:#c4e0fd;
+    // display:flex;
+    width: 80%;
+    text-align: center;
+    // line-height: 50px;
+    // margin: 0 auto;
+    // margin-top: 30rpx;
+    margin-left:50rpx;
+    margin-top: 90rpx;
+}
+.home_gong_img{
+    width:80rpx;
+    height: 80rpx;
+}
+.map{
+    width: 100%;
+    height: auto;
+}
+.home_map_img{
+    // width:200rpx;
+    // height: auto;
+    position: relative;
+    // left:44rpx;
+    text-align: center;
+}
+.home_gong{
+    // width: 300px;
+    // height: 70px;
+    text-align: center;
+    // line-height: 90px;
+    font-size: 34px;
+    position: relative;
+    // left: 204px;
+    color:#cbfffa;
+    // margin-top: -100rpx;
+}
+
+.home_con{
+    height: 3350rpx;
+    width: 100%;
+    background: url('https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/2019/background.jpg');
+    // background-position: center -670px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-background-size: cover;
+    
+}
+</style>

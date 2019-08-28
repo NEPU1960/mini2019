@@ -1,0 +1,243 @@
+<template>
+    <!--pages/map/map.wxml-->
+    <view style="width: 100%;">
+    <scroll-view scroll-x="true">
+        <view class="top-swich" style="width:{{buildlData.length * 120 < windowWidth ? windowWidth: buildlData.length * 120}}rpx;" wx:if="{{!fullscreen}}">
+        <label wx:for="{{buildlData}}" wx:key="id" id="{{index}}" bindtap="changePage" class="top-swich-btn {{isSelectedBuildType == index ? 'active' : ''}}">{{item.name}}
+        </label>
+        </view>
+    </scroll-view>
+    <map longitude="{{longitude}}" latitude="{{latitude}}" scale="{{buildlData[isSelectedBuildType].scale}}" markers="{{buildlData[isSelectedBuildType].data}}" bindmarkertap="markertap" bindregionchange="regionchange" include-points="{{buildlData[isSelectedBuildType].data}}"
+        show-location="{{islocation? 'true': 'false'}}" enable-overlooking="true" enable-3D="true" style="width: auto; height:{{fullscreen ? 94 : 48}}vh;">
+        <cover-view class="controls {{fullscreen ? 'full' : ''}}">
+        <cover-view bindtap="navigateSearch">
+            <cover-image class="img" src="/img/search.png" />
+        </cover-view>
+        <cover-view bindtap="location">
+            <cover-image class="img" src="/img/location.png" />
+        </cover-view>
+        </cover-view>
+    </map>
+    <button bindtap="clickButton">
+        共有{{buildlData[isSelectedBuildType].data.length}}个景观 ◕‿◕
+    </button>
+    <scroll-view scroll-y="true" style="height:{{fullscreen ? 0 : 40}}vh" scroll-top="{{(isSelectedBuild -1 ) * 70}}">
+        <view wx:for="{{buildlData[isSelectedBuildType].data}}" wx:key="id" class="building-item" style="{{isSelectedBuild -1 == index ? 'background-color: #d5d5d5;' : ''}}">
+        <view class="img-view">
+            <navigator class="img" url="details?tid={{isSelectedBuildType}}&bid={{index}}">
+            <image src="{{imgCDN}}{{item.img[0] + '?imageView2/1/w/240/h/180/q/100|imageslim'}}" mode="aspectFill"/> 
+            <view class="item">
+                <view class="itemName">
+                {{item.name}}
+                </view>
+                <view class="itemFloor" wx:if="{{item.floor}}">
+                位置：{{item.floor}}
+                </view>
+            </view>
+            </navigator>
+            <navigator class="text" url="polyline?latitude={{item.latitude}}&longitude={{item.longitude}}">
+            <image src="/img/location.svg"/> 
+            </navigator>
+        </view>
+        </view>
+    </scroll-view>
+    </view>
+</template>
+<script>
+import wepy from '@wepy/core';
+wepy.page({
+    //获取应用实例
+// var app = getApp();
+  data: {
+    fullscreen: false,
+    latitude: 46.590120,
+    longitude: 125.150220,
+    buildlData: "",
+    // windowHeight: "",
+    // windowWidth: "",
+    isSelectedBuild: 0,
+    isSelectedBuildType: 0,
+    imgCDN: "",
+    islocation: true
+  },
+  onLoad: function () {
+    wx.showShareMenu({
+      withShareTicket: true
+    })
+    this.buildlData = this.$app.$options.globalData.map
+    this.imgCDN = this.$app.$options.imgCDN
+    var _this = this;
+    // wx.getSystemInfo({
+    //   success: function (res) {
+    //       console.log("SystemInfo",res.windowHeight)
+    //     //获取当前设备宽度与高度，用于定位控键的位置
+    //     this.windowHeight = res.windowHeight
+    //     this.windowWidth = res.windowWidth
+    //   }
+    // })
+    //载入更新后的数据
+    // this.setData({
+    //   buildlData: app.globalData.map
+    // })
+  },
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: this.$app.$options.globalData.introduce.name + ' - 校园导览',
+      path: '/pages/map/index',
+      success: function (res) {
+        // 转发成功
+      },
+      fail: function (res) {
+        // 转发失败
+      }
+    }
+  },
+  methods: {
+      regionchange(e) {
+    // 视野变化
+    // console.log(e.type)
+  },
+  markertap(e) {
+    // 选中 其对应的框
+    this.setData({
+      isSelectedBuild: e.markerId
+    })
+    // console.log("e.markerId", e.markerId)
+  },
+  navigateSearch() {
+    wx.navigateTo({
+      url: 'search'
+    })
+  },
+  location: function () {
+    var _this = this
+    wx.getLocation({
+      type: 'wgs84', // 默认为 wgs84 返回 gps 坐标，gcj02 返回可用于 wx.openLocation 的坐标  
+      success: function (res) {
+        this.$app.$options.globalData.latitude = res.latitude;
+        this.$app.$options.globalData.longitude = res.longitude;
+        this.longitude = res.longitude,
+        this.latitude = res.latitude
+      }
+    })
+  },
+  clickButton: function (e) {
+    //console.log(this.data.fullscreen)
+    //打印所有关于点击对象的信息
+    this.fullscreen = !this.data.fullscreen
+  },
+  changePage: function (event) {
+      this.isSelectedBuildType = event.currentTarget.id,
+      this.isSelectedBuild = 0
+  }
+  }
+})
+</script>
+<style>
+/* pages/map/map.wxss */
+
+.building-item {
+  height: 50px;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px;
+}
+
+.top-swich {
+  background-color: #079df2;
+  height: 6vh;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.top-swich-btn {
+  background-color: none;
+  letter-spacing: 3rpx;
+  height: 65rpx;
+  color: #fff;
+  font-size: 30rpx;
+}
+
+.active {
+  border-bottom: solid white;
+  height: 50rpx;
+  display: inline-block;
+}
+
+button {
+  font-size: 26rpx;
+  height: 6vh;
+}
+
+.img-view {
+  height: 100%;
+  display: flex;
+}
+
+.img {
+  width: 85%;
+  height: 100%;
+  display: flex;
+}
+
+.img image {
+  width: 60px;
+  height: 90%;
+  margin: auto 7rpx;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  margin: auto 0;
+}
+
+.itemName {
+  margin: 0 20rpx;
+  font-size: 32rpx;
+}
+
+.itemFloor {
+  margin: 0 20rpx;
+  font-size: 28rpx;
+  color: #555;
+}
+
+.text {
+  margin: auto 15px;
+  width: 13%;
+}
+
+.text image {
+  width: 70rpx;
+  height: 70rpx;
+}
+
+.controls {
+  position: relative;
+  top: 65%;
+  left: 85%;
+  /* display: flex; */
+}
+
+.controls .img {
+  margin-top: 5px;
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.full {
+  top: 82%;
+}
+
+</style>

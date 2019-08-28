@@ -1,0 +1,127 @@
+<template>
+    <view>
+        <view class="wave">
+            <image class="welcome" src="/static/images/more/you.png" mode="widthFix"/>
+        </view>
+        <view class="all">
+            <view class="info" v-for="(item,key) in backinfo">
+                    <view class="title">{{key}}</view>
+                    <text>:</text>
+                    <view class="text">{{item}}</view>
+            </view>
+        </view>
+    </view>
+</template>
+<script>
+import wepy from '@wepy/core'
+wepy.page({
+    data: {
+        IDNumber:"",
+        backinfo:{}   
+    },
+    methods:{
+       async request(IDNumber){
+            wx.request({
+                url: "https://www.nepunmc.cn/2019/yjs",
+                method: 'POST',
+                data: IDNumber,
+                header: 'application/json',
+                success: (res)=>{
+                    console.log(res.data)
+                    this.backinfo=res.data.data
+                    wx.setNavigationBarTitle({
+                        title: res.data.data.姓名+"报道信息",
+                    });
+                },
+                fail(){
+                    wx.showModal({
+                        title: '查询失败',
+                        content: "前方网络堵塞，请稍后再试",
+                        showCancel: true,
+                        cancelText: '取消',
+                        cancelColor: '#000000',
+                        confirmText: '确定',
+                        confirmColor: '#3CC51F',
+                        success: res => {
+                           wx.reLaunch({
+                               url: 'login'
+                           });
+                        }
+                    });
+                }
+            });
+        }
+
+    },
+    onLoad(options){
+        this.request(options)
+    }
+})
+</script>
+<style lang="less">
+page{
+    width: 100%;
+    background: -webkit-linear-gradient(top, #fccd4d 0%,#fceabb 35%,#fbdf93 100%);
+}
+.wave{
+    // height:10%;
+    // width: 10%;
+    text-align: center;
+    align-content: center;
+    margin-bottom: 100rpx;
+}
+.welcome{
+    text-align:center;
+    width:450rpx;
+}
+.all{
+    margin-top:-90rpx;
+    margin-bottom: 50rpx;
+    border: none;
+    -webkit-border-radius: 12px;
+    border-radius: 12px;
+    background-color: rgba(52,152,219,0.76);
+    margin-left: 50rpx;
+    margin-right: 50rpx;
+    padding: 3px;
+    right: 7px;
+    left: 6px;
+    overflow: visible;
+    display: block;
+    float: none;
+    z-index: auto;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    position: static;
+    opacity: 1;
+    cursor: default;
+}
+.info{
+    display: flex;
+    margin-left: 20rpx;
+    margin-top: 20rpx;
+}
+.title{
+    width:180rpx;
+    display: inline-block;
+    text-align: justify;
+    vertical-align: top;
+        &::after {
+            display: inline-block;
+            width: 100%;
+            content: '';
+            height: 0;
+        }
+}
+.text{
+    margin-left: 35rpx;
+}
+</style>
+<config>
+{
+  navigationBarTitleText: 'We东油',
+}
+</config>
+
+

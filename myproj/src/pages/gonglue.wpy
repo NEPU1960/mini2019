@@ -1,0 +1,139 @@
+<template>
+    <view>
+        <view class="time">
+        <title></title>
+        </view>
+        <view class="main">
+            <view class="text">
+                <block v-for="item in items">
+                    <view class="title">{{item.title}}</view>
+                    <view class="contnt" v-for="li in item.content">{{li}}</view>
+                </block>
+            </view>
+            <Footer></Footer>
+        </view>
+    </view>
+</template>
+<script>
+import wepy from '@wepy/core'
+wepy.page({
+    data:{
+        items:[
+            { title: "报道时间：", content: ["本科新生2019年8月31日——9月1日报道"] },
+        { title: "报道地点：", content: ["重庆邮电大学风雨操场"] },
+        {
+          title: "新生必带：",
+          content:["1.录取通知书、准考证；",
+          "2.高中档案资料，包括学生档案和团关系档案；",
+          "3.身份证：原件及正反复印件；",
+          "4.户口本：原件及本人页复印件；",
+          "5. 一寸照片、二寸照片。一寸至少一版，两寸2-4张即可；",
+          "6.其他资格证书。"]
+        },
+        {
+          title: "生活用品",
+          content:
+            [
+                "1.床上用品(学校通常会有统一的床上用品卖，但如果有自己用的惯的羽绒被、蚕丝被或者枕头、床垫之类的也可以自己带去) ；",
+                "2.粘钩；",
+                "3.小锁(用来锁一下宿舍存放重要东西的柜子) ；",
+                "4.各季衣服；",
+                "5.衣架、衣夹、八爪鱼衣架；",
+                "6.抹布、洗衣液；",
+                "7.常用药品；",
+                "8.水果刀；",
+                "9.晾衣绳；",
+                "10.小垃圾桶；",
+                "11.零食包装夹或牛皮筋；",
+                "12.插排；",
+                "13.各种各样的收纳盒(存放食品、衣物、杂物等）；",
+                "14.蚊香、花露水；",
+                "15.充电器、数据线(包括手机和充电宝以及各种其他小电器的数据线) ；",
+                "16.雨伞、水杯、水壶、纸巾。",
+            ]
+        },
+        {
+          title: "学习用品",
+          content:
+            [
+                "1.笔记本及草稿本；",
+                "2.笔袋和各种笔尺橡皮；",
+                "3.剪刀；",
+                "4.笔筒；",
+                "5.台灯；",
+                "6.u盘；",
+                "7.固体胶、胶纸；",
+                "8.订书机及订书钉；",
+                "9.修正带、修正液；",
+                "10.回形针、燕尾夹；",
+                "11.电脑。"
+            ]
+        },
+        {
+          title: "军训用品",
+          content:
+           [
+                "1.防晒霜；",
+                "2.鞋垫；",
+                "3.几个小夹子，夹军训用帽；",
+                "4.皮带，军训发的皮带是扎在外面的，得带一个扎裤子；",
+                "5.清凉油及防蚊用品。"
+           ]
+        }
+        ]
+
+    },
+    // methods:{
+    //     nav(url){
+    //         wx.navigateTo({
+    //             url: `/pages/`+url
+    //         });
+    //     },
+    // }
+})
+</script>
+<style lang="less">
+.main{
+    // width: 100%;
+    height: auto;
+    background: url("https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/2019/background.jpg");
+    background-position: center -898rpx;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-background-size: cover;
+}
+.text{
+    width: 95%;
+    border: solid 1px #00fcff;
+    background-color: #89bcf7;
+    // margin: 40rpx auto;
+    opacity: 0.8;
+    color: #ffffff;
+    box-sizing: border-box;
+    padding: 0 33px;
+    // margin-top:100rpx;
+    margin-left: 20rpx;
+    margin-right: 20rpx;
+    
+}
+.title{
+    font-size: 28px;
+    font-weight: bold;
+    margin: 24px 0 10px 0;
+    font-family: "pingfang-bold";
+}
+.content{
+    font-size: 20px;
+    line-height: 34px;
+    font-family: "pingfang-regular";
+}
+</style>
+<config>
+{
+    usingComponents: {
+        "Footer":"../components/footer",
+        "homeBubble":"../components/animation/bubble",
+        "title":"../components/title",
+    }
+}
+</config>

@@ -1,0 +1,41 @@
+<template>
+    <view>
+        <tabs :items="items"></tabs>
+    </view>
+</template>
+<script>
+import wepy from '@wepy/core';
+wepy.page({
+ data: {
+        items: [
+            {
+                name: '一食堂',
+                'conent':"东北石油大学第一餐饮中心"
+            },
+            {
+                name: '二食堂',
+                'conent':"东北石油大学第二餐饮中心"
+            },
+            {
+                name: '三食堂',
+                'conent':"东北石油大学第三餐饮中心"
+            }
+        ],
+    },
+    methods:{
+
+    }
+    
+})
+</script>
+<style lang="less">
+
+
+</style>
+<config>
+{   
+    "usingComponents": {
+    "tabs": "../components/tabs"
+}
+}
+</config>

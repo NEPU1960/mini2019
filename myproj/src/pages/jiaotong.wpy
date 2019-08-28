@@ -1,0 +1,130 @@
+<template>
+    <view>
+        <view class="time">
+        <title></title>
+        </view>
+        <view class="main">
+            <view class="text">
+                <block v-for="item in items">
+                    <view class="title">{{item.title}}</view>
+                    <view class="contnt" v-for="li in item.content">{{li}}</view>
+                </block>
+            </view>
+            <Footer></Footer>
+        </view>
+    </view>
+</template>
+<script>
+import wepy from '@wepy/core'
+wepy.page({
+    data:{
+        items:[
+        { title: "温馨提示", content: ["8月30日早7点到17点学校会派出校园直达车分别在大庆东站，大庆站，大庆西站接站。其他时间到站请乘坐公交车或者出租车到学校。如果你们选择私家车或者出租车送校，选择正门进入送至住宿楼下，按照要求停车。下面提供了从大庆站，大庆东站，大庆西站，萨尔图机场到东油的乘车方案。"] },
+        {
+          title: "大庆东站→东北石油大学 公交路线",
+          content:["路线1：大庆东站步行到9路公交车临时站至检察院站下车，往东北方向走20分钟到达东北石油大学；",
+          "路线2：大庆东站步行至铁东村车站乘坐805路公交车至开发区管委会站下，管委会对面就是东北石油大学；",
+          "路线3：大庆东站乘坐808路公交车在黎明东街路口站下车，转乘35路公交车至东北石油大学站下车；",
+          "路线4：大庆东站乘坐810路公交车可直达东北石油大学。"
+          ]
+        },
+        {
+          title: "大庆东站→东北石油大学 其他路线",
+          content:
+            [
+                "1.滴滴出行快车价格约为11元左右，乘坐出租车的价格约为15元-17元不等。",
+                "2.一般学校会安排大巴接新生，如没有大巴请同学们不要乘坐车站附近拼车的出租车及无运营执照的黑车。",
+            ]
+        },
+        {
+          title: "大庆萨尔图机场→东北石油大学路线",
+          content:
+            [
+                "路线1：滴滴出行快车约为45元",
+                "路线2：出租车价格约为50-60元",
+                "由于大庆萨尔图机场相对偏僻并无开通公交线路，乘坐航班下飞机后也可乘坐机场大巴返回市里，可在公交总站下车，乘坐公交参照大庆火车站路线。"
+            ]
+        },
+        {
+          title: "大庆站→东北石油大学 公交路线",
+          content:
+           [
+                "路线1：大庆火车站下车过马路至路对面大庆公交总站，乘坐225路公交车至东北石油大学站下车；",
+                "路线2：大庆火车站下车过马路至路对面大庆公交总站，乘坐35路公交车至东北石油大学站下车；",
+                "路线3：大庆火车站下车过马路至路对面大庆公交总站，乘坐25路公交车至农行小区站下车，向东步行200米到达东北石油大学。"
+           ]
+        },
+        {
+          title: "大庆站→东北石油大学 其他路线",
+          content:
+           [
+                "滴滴出行快车价格约为25元，出租车价格可以讲价，不讲价一般为25元。",
+                "一般学校会安排大巴接新生，如没有大巴，请同学们不要乘坐车站附近拼车的出租车，以及无运营执照的黑车。"               
+           ]
+        },
+        {
+          title: "大庆西站→东北石油大学 公交路线",
+          content:
+           [
+                "路线1：快1线（新玛特下）→35或50路（约1小时32分钟，共4元）快1线  途经4站  让胡路商场—新玛特  同站换乘35 （50）路：途径6站  新玛特—东北石油大学",
+                "路线2：快1线（新玛特下）→11路（最快，约1小时30分钟，共4元）快1线  途经4站  808路：让胡路商场—新玛特  同站换乘11路  途经6站  新玛特—祥阁花园（下车，步行约98米一分钟）",
+                "路线3：快1线(万达广场下)→25路(约1小时34分钟，共4元)快1线  途经3站  让胡路商场—万达广场（下车，步行约63米）25路  途经13站  万达广场—祥阁花园（下车，步行84米约一分钟）" ,          
+           ]
+        }
+        ]
+
+    },
+    // methods:{
+    //     nav(url){
+    //         wx.navigateTo({
+    //             url: `/pages/`+url
+    //         });
+    //     },
+    // }
+})
+</script>
+<style lang="less">
+.main{
+    // width: 100%;
+    height: auto;
+    background: url("https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/2019/background.jpg");
+    background-position: center -898rpx;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-background-size: cover;
+}
+.text{
+    width: 95%;
+    border: solid 1px #00fcff;
+    background-color: #89bcf7;
+    // margin: 40rpx auto;
+    opacity: 0.8;
+    color: #ffffff;
+    box-sizing: border-box;
+    padding: 0 33px;
+    // margin-top:100rpx;
+    margin-left: 20rpx;
+    margin-right: 20rpx;
+    
+}
+.title{
+    font-size: 28px;
+    font-weight: bold;
+    margin: 24px 0 10px 0;
+    font-family: "pingfang-bold";
+}
+.content{
+    font-size: 20px;
+    line-height: 34px;
+    font-family: "pingfang-regular";
+}
+</style>
+<config>
+{
+    usingComponents: {
+        "Footer":"../components/footer",
+        "homeBubble":"../components/animation/bubble",
+        "title":"../components/title",
+    }
+}
+</config>

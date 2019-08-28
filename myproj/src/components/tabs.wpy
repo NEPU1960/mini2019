@@ -1,0 +1,141 @@
+<template>
+    <view>
+        <title></title>
+        <view class="main">
+            <view class="tag">
+                <view class="tag-bg" v-for="(item,index) in items">
+                    <view class=" title {{[ currentTab==index ? 'choose' : 'no-choose' ]}}" @tap="switchNav(index)">
+                        <view>{{item.name}}</view>
+                    </view>
+                </view>
+            </view>
+            <view>
+                <!-- 切换的内容 -->
+                <view class="tab-content">{{items[currentTab].conent}}</view>
+                <!-- <view class="tab-content" wx:if="{{currentTab===1}}">选项卡演示内容2222222</view>
+                <view class="tab-content" wx:if="{{currentTab===2}}">选项卡演示内容3333333</view> -->
+            </view>
+            <footer></footer>
+        </view>
+    </view>
+</template>
+<script>
+import wepy from "@wepy/core"
+wepy.component({
+    data: {
+    currentTab: 0
+    },
+    props:{
+        items:Array
+    },
+    methods:{
+       switchNav(i) {
+            if (this.currentTab === i) {
+                return false
+            } else {
+                this.currentTab = i
+            }
+        }
+    }
+
+})
+</script>
+<style lang="less">
+.main{
+    height: auto
+    width: 100%;
+    background: url("https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/2019/background.jpg");
+    background-position: center -900rpx;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-background-size: cover;
+}
+.tag{
+    // width:80%;
+    display: flex;
+    // justify-content: space-between;
+    // margin-left: 30rpx;
+    // margin-right:30rpx;
+    
+}
+.tag-bg{
+    width:100%;
+    // display: inline-flex;
+    text-align: center;
+    font-size: 25px;
+    line-height: 80rpx;
+}
+.title{
+   
+    // font-size: 34rpx;
+    color: #6dd5ff;
+    margin-top:50rpx;
+    text-align: center;
+    display: block;
+}
+.choose{
+    background: url("https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/2019/yes-button.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    -webkit-background-size: contain;
+}
+.no-choose{
+    background: url("https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/2019/no-button.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    -webkit-background-size: contain;
+}
+
+.swiper-tab {
+  width: 100%;
+  border-bottom: 1rpx solid #eee;
+  text-align: center;
+  line-height: 80rpx;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background: #fff;
+}
+.swiper-tab-list {
+  font-size: 30rpx;
+  color: #777777;
+  padding: 0 40rpx;
+  position: relative;
+}
+.active {
+  color: #eb6623;
+  border-bottom: 5rpx solid #eb6623;
+}
+.dot {
+  position: absolute;
+  display: flex;
+  width: 37rpx;
+  height: 35rpx;
+  line-height: 40rpx;
+  text-align: center;
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+  background: #eb6623;
+  border-radius: 100px;
+  color: #fff;
+  z-index: 999;
+  font-size: 26rpx;
+  top: 0;
+  right: 10rpx;
+}
+
+.tab-content {
+  text-align: center;
+  padding: 100rpx 50rpx;
+}
+</style>
+<config>
+{
+    usingComponents:{
+        "title":"./title",
+        "footer":"./footer"
+    }
+}
+</config>
