@@ -10,7 +10,15 @@ wepy.page({
         items: [
             {
                 name: '一食堂',
-                'conent':"东北石油大学第一餐饮中心"
+                'conent':[
+                    {
+                        "image":"https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/2019/new.jpg",
+                        "title":"自选",
+                        "local":"位于东北石油大学第一餐饮中心",
+                        "longitude":"46.587650",
+                        "latitude":"125.145870",
+                        }
+                    ]
             },
             {
                 name: '二食堂',

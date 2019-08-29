@@ -114,9 +114,9 @@ wepy.app({
 <config>
 {
     pages: [
+      'pages/shitang',
       'pages/index',
       'pages/zhoubian',
-      'pages/shitang',
       'pages/jiaotong',
       'pages/gonglue',
       'pages/wanneng/login',

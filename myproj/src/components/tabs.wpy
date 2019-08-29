@@ -4,14 +4,28 @@
         <view class="main">
             <view class="tag">
                 <view class="tag-bg" v-for="(item,index) in items">
-                    <view class=" title {{[ currentTab==index ? 'choose' : 'no-choose' ]}}" @tap="switchNav(index)">
+                    <view class="title {{[ currentTab==index ? 'choose' : 'no-choose' ]}}" @tap="switchNav(index)">
                         <view>{{item.name}}</view>
                     </view>
                 </view>
             </view>
             <view>
                 <!-- 切换的内容 -->
-                <view class="tab-content">{{items[currentTab].conent}}</view>
+                <view class="tab-content">
+                    <view v-for="item in items[currentTab].conent" >
+                        <view>
+                            <navigator url="./map/polyline?latitude={{item.latitude}}&longitude={{item.longitude}}">
+                                <image class="img" src="{{item.image}}" mode="scaleToFill"  lazy-load="false"> </image>
+                                <view class="tit">{{item.title}}<view>
+                                <div class="say">
+                                    <img class="icon" src="../static/images/icon.png" />
+                                    <view class="content">{{item.local}}<view>  
+                                </div>
+                            </navigator>
+                        </view>
+                    </view>
+
+                </view>
                 <!-- <view class="tab-content" wx:if="{{currentTab===1}}">选项卡演示内容2222222</view>
                 <view class="tab-content" wx:if="{{currentTab===2}}">选项卡演示内容3333333</view> -->
             </view>
@@ -35,14 +49,14 @@ wepy.component({
             } else {
                 this.currentTab = i
             }
-        }
+        },
     }
 
 })
 </script>
 <style lang="less">
 .main{
-    height: auto
+    height: auto;
     width: 100%;
     background: url("https://nepu-1251611395.cos.ap-shanghai.myqcloud.com/2019/background.jpg");
     background-position: center -900rpx;
@@ -50,6 +64,40 @@ wepy.component({
     background-size: cover;
     -webkit-background-size: cover;
 }
+ .say {
+      display: flex;
+      width: 100%;
+      height: 48px;
+      padding-right: 16px;
+      .icon {
+        width: 19px;
+        height: 24px;
+        margin: 12px 14px;
+      }
+      .content {
+        font-size: 16px;
+        font-family: "pingfang-regular";
+        color: #003ee0;
+        opacity: 0.8;
+        line-height: 26px;
+        margin-top: 5px;
+      }
+    }
+.img {
+      width: 273px;
+      height: 164px;
+      border: #003ee0 solid 2px;
+      margin: 14px 14px 7px 14px;
+    }
+.tit {
+      margin-left: 14px;
+      font-family: "pingfang-bold";
+      font-size: 24px;
+      font-weight: bold;
+      color: #003ee0;
+      opacity: 0.8;
+      letter-spacing: 2px;
+    }
 .tag{
     // width:80%;
     display: flex;
@@ -66,7 +114,6 @@ wepy.component({
     line-height: 80rpx;
 }
 .title{
-   
     // font-size: 34rpx;
     color: #6dd5ff;
     margin-top:50rpx;
@@ -88,47 +135,28 @@ wepy.component({
     -webkit-background-size: contain;
 }
 
-.swiper-tab {
-  width: 100%;
-  border-bottom: 1rpx solid #eee;
-  text-align: center;
-  line-height: 80rpx;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  background: #fff;
-}
-.swiper-tab-list {
-  font-size: 30rpx;
-  color: #777777;
-  padding: 0 40rpx;
-  position: relative;
-}
-.active {
-  color: #eb6623;
-  border-bottom: 5rpx solid #eb6623;
-}
-.dot {
-  position: absolute;
-  display: flex;
-  width: 37rpx;
-  height: 35rpx;
-  line-height: 40rpx;
-  text-align: center;
-  align-items: center; /* 垂直居中 */
-  justify-content: center; /* 水平居中 */
-  background: #eb6623;
-  border-radius: 100px;
-  color: #fff;
-  z-index: 999;
-  font-size: 26rpx;
-  top: 0;
-  right: 10rpx;
-}
-
 .tab-content {
-  text-align: center;
-  padding: 100rpx 50rpx;
+    text-align: center;
+    padding: 100rpx 50rpx;
+    background-color: #89bcf7;
+    color: #ffffff;
+    box-sizing: border-box;
+    padding: 0 33px;
+    margin-left: 20rpx;
+    margin-right:20rpx;
+    margin-top:30rpx;
+    // width: 642px;
+    // height: 1277px;
+    // margin: 36px 25px 48px 25px;
+    // width: 660px;
+    // height: 1303px;
+    margin: -12px auto 35px auto;
+    // overflow: hidden;
+    // overflow-x:hidden;
+    // overflow-y:scroll;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
 }
 </style>
 <config>
